@@ -15,7 +15,7 @@ In order to run this assignment, you will at least need a Google account and cap
 - [LabelImg](https://github.com/tzutalin/labelImg)
 ```
 
-### Installing
+### Installing and Running
 
 First, clone or download the repository as a zip.
 
@@ -40,6 +40,15 @@ Now you can use Google Colab to run the Object Detection API for both training a
 ```
 Menu bar > Runtime > Restart and Run all
 ```
+
+Notes:
+1. The unmodified colab file will run all the way through with a playing card dataset from EdjeElectronics.
+2. As tensorflow is updating to 2.0.0 there is a lot of additional warnings that file output in the notebook.
+3. Running the training command below fills up std output with a lot of text, so make sure to scroll down frequently in order to see loss and checkpoint steps.
+```
+!python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+```
+4. You can stop the training at any time and simply use Menu Bar > Runtime > Run After to stop the training early. You can check how many checkpoints are available in /content/models/research/object_detection/training, so if you want to perform a manual early stopping you should at least let the notebook create one new checkpoint (typically at step 17XX).
 
 ### Code
 
