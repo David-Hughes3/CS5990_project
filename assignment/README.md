@@ -41,12 +41,15 @@ Now you can use Google Colab to run the Object Detection API for both training a
 Menu bar > Runtime > Restart and Run all
 ```
 
-Notes:
+Monitoring training can be done by opening the tensorboard link that will look something like "https://f1632e11.ngrok.io/" that is output above the training command step. Tensorboard with Colab has issues occasionally, so the display may or may not work well.
+
+
+Additional Notes:
 1. The unmodified colab file will run all the way through with a playing card dataset from EdjeElectronics.
 2. As tensorflow is updating to 2.0.0 there is a lot of additional warnings that file output in the notebook.
-3. Running the training command below fills up std output with a lot of text, so make sure to scroll down frequently in order to see loss and checkpoint steps.
+3. Running the training command below fills up std output with a lot of text that tends to crash the Colab jupyter notebook environemnt. So, the output has been redirected to a /content/training_log.txt . You can download or view this file periodically to observe the training steps.
 ```
-!python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+!python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config 2> /content/training_log.txt
 ```
 4. You can stop the training at any time and simply use Menu Bar > Runtime > Run After to stop the training early. You can check how many checkpoints are available in /content/models/research/object_detection/training, so if you want to perform a manual early stopping you should at least let the notebook create one new checkpoint (typically at step 17XX).
 
