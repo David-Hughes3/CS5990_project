@@ -160,15 +160,21 @@ If you had to follow the *note* and downloaded a new file from /object_detection
 
 The object detection api runs evaluation after each checkpoint is created, and each checkpoint is created after a certain time interval. This is the default behavior, but doesnt serve us well in this toy problem for visualizing on our validation dataset.
 
+On line 27, add this line to make the steps print to the console
+```
+tf.logging.set_verbosity(tf.logging.INFO)
+```
+
 On line 62, in model_main.py (runs both train and eval):
 ```
 config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir)
 ```
 Change this line to be
 ```
-config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, save_checkpoints_steps=500)
+config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, save_checkpoints_steps=500, log_step_count_steps=100)
 ```
-This makes it so that checkpoints will be created more often, and therefore eval will be ran more often.
+- save_checkpoints_steps makes it so that checkpoints will be created more often, and therefore eval will be ran more often.
+- log_step_count changes how often output is printed and logs are created for tensorboard visualization
 
 This modified file has been included in the default custom folder download that will be installed in the colab notebook.
 
