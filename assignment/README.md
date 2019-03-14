@@ -70,9 +70,10 @@ The modification tasks that need to be performed to use your own dataset are lis
 1. Gather and label images
 2. Change the labelmap.pbtxt
 3. Modify a function in generate_tfrecord.py
-3. Modify faster_rcnn_inception_v2_pets.config
-4. Zip up the custom folder and upload to the colab notebook
-5. Comment out the first block of code and unblock comment the second block of code, so that the custom.zip can be unzipped and your dataset will be used
+4. Modify faster_rcnn_inception_v2_pets.config
+5. (Optional) Change a line in model_main.py
+6. Zip up the custom folder and upload to the colab notebook
+7. Comment out the first block of code and unblock comment the second block of code, so that the custom.zip can be unzipped and your dataset will be used
 
 *Directory Structure:*
 - custom
@@ -91,6 +92,7 @@ The modification tasks that need to be performed to use your own dataset are lis
     - generate_tfrecord.py
     - sizeChecker.py
     - xml_to_csv.py
+    - model_main.py
 
 ### Gathering and Labeling Images
 
@@ -152,6 +154,23 @@ If you had to follow the *note* and downloaded a new file from /object_detection
     - Input_path: "/content/models/research/object_detection/test.record"
     - Label_map_path: "/content/models/research/object_detection/training/labelmap.pbtxt"
 ```    
+### Optional Step
+
+*This information is subject to change with new object detection api versions.*
+
+The object detection api runs evaluation after each checkpoint is created, and each checkpoint is created after a certain time interval. This is the default behavior, but doesnt serve us well in this toy problem for visualizing on our validation dataset.
+
+On line 62, in model_main.py (runs both train and eval):
+```
+config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir)
+```
+Change this line to be
+```
+config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, save_checkpoints_steps=500)
+```
+This makes it so that checkpoints will be created more often, and therefore eval will be ran more often.
+
+This modified file has been included in the default custom folder download that will be installed in the colab notebook.
 
 ### Final Modification Steps
 In order to move the images and modified scripts/configs, follow these steps.
