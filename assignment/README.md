@@ -178,6 +178,14 @@ config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, save_checkpoints_step
 
 This modified file has been included in the default custom folder download that will be installed in the colab notebook.
 
+TODO:
+```
+A common problem that does not have a good solution yet in the object detection api.
+"INFO:tensorflow:Skip the current checkpoint eval due to throttle secs (600 secs)."
+This throttle_secs parameter prevents the more frequent checkpointing from evaluation, causing the same problem of a sparse number of datapoints in the graph. So far modifiying the model_lib.py and model_main.py has been tried to include additonal flags and trying to pass a different argument to the EvalSpec constructor.
+
+```
+
 ### Final Modification Steps
 In order to move the images and modified scripts/configs, follow these steps.
 
